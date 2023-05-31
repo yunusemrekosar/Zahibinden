@@ -5,6 +5,10 @@ using Zahibinden.Data;
 using Zahibinden.Services;
 using Zahibinden.Services.Storage;
 using Zahibinden.Services.Storage.Azure;
+using AutoMapper;
+using Zahibinden.DataAccess.Abstract;
+using Zahibinden.DataAccess.Concrete;
+using Zahibinden.Data.Entities;
 
 namespace Zahibinden
 {
@@ -14,18 +18,26 @@ namespace Zahibinden
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<MappingProfile>();
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+
+
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<Role>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddStorage<AzureStorage>();
-
+            builder.Services.AddRegister();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

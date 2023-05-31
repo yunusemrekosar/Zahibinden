@@ -4,10 +4,10 @@ namespace Zahibinden.Data.Entities.Common
 {
     public class BaseClass
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
-        public virtual bool IsActive { get; set; }    
+        public bool IsActive { get; set; }    
 
     }
 }

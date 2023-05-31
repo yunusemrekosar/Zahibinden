@@ -5,18 +5,19 @@ using Zahibinden.Data.Entities.Common;
 
 namespace Zahibinden.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User, Role,int>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-        public DbSet<Zahibinden.Data.Entities.Advert>? Adverts { get; set; }
-        public DbSet<Zahibinden.Data.Entities.Category>? Categories { get; set; }
-        public DbSet<Zahibinden.Data.Entities.User>? Users { get; set; }
-        public DbSet<Zahibinden.Data.Entities.City>? Cities { get; set; }
-        public DbSet<Zahibinden.Data.Entities.AdvertType>? Types { get; set; }
-        public DbSet<Zahibinden.Data.Entities.Image>? Images { get; set; }
+        public DbSet<Advert> Adverts { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<AdvertType> Types { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
