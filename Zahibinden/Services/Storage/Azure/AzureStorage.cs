@@ -1,8 +1,6 @@
-﻿
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Microsoft.AspNetCore.Mvc;
-using Zahibinden.Services.StorageAbs;
+using System.Data;
 using Zahibinden.Services.StorageAbs.AzureAbs;
 
 namespace Zahibinden.Services.Storage.Azure
@@ -16,7 +14,7 @@ namespace Zahibinden.Services.Storage.Azure
             _blobServiceClient = new(configuration["Storage:Azure"]);
         }
 
-        public async Task<bool> UploadAsync(string path, IFormFile file)
+        public async Task<bool> UploadAsync(string path, IFormFileCollection files)
         {
             try
             {
@@ -24,14 +22,28 @@ namespace Zahibinden.Services.Storage.Azure
                 await _blobContainerClient.CreateIfNotExistsAsync();
                 await _blobContainerClient.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
 
-                BlobClient blobClient = _blobContainerClient.GetBlobClient(file.FileName);
-
-                BlobUploadOptions options = new BlobUploadOptions
+                foreach (var file in files)
                 {
-                    HttpHeaders = new BlobHttpHeaders { ContentType = "image/png" }
-                };
+                    string NewItemName = file.FileName;
+                    var ImageType = NewItemName.Split('.').Reverse().ToArray()[0];
 
-                await blobClient.UploadAsync(file.OpenReadStream(), options);
+                    int a = 1;
+
+                    while (HasFile(path, NewItemName))
+                    {
+                        NewItemName = file.FileName.Replace($".{ImageType}", $"{a}.{ImageType}");
+                        a++;
+                    }
+
+                    BlobClient blobClient = _blobContainerClient.GetBlobClient(NewItemName);
+                    BlobUploadOptions options = new BlobUploadOptions
+                    {
+                        HttpHeaders = new BlobHttpHeaders { ContentType = $"image/{ImageType}" }
+                        //todo: burada tip kontrolü yap
+                    };
+           
+                    await blobClient.UploadAsync(file.OpenReadStream(), options);
+                }
                 return true;
             }
             catch (Exception)
@@ -47,12 +59,18 @@ namespace Zahibinden.Services.Storage.Azure
             await blobClient.DeleteAsync();
         }
 
-        public string GetSRC(string path, string fileName)
+        public List<string> GetSRC(string path)
         {
+            
+            List<string> srcs = new();
             _blobContainerClient = _blobServiceClient.GetBlobContainerClient(path);
             var b = _blobContainerClient.GetBlobs().Select(b => b.Name).ToList();
-            string a = $"https://zahibinden.blob.core.windows.net/{path}/{b[0]}";
-            return a;
+            foreach (var item in b)
+            {
+                string a = $"https://zahibinden.blob.core.windows.net/{path}/{item}";
+                srcs.Add(a);
+            }
+            return srcs;
         }
 
         public bool HasFile(string path, string fileName)
@@ -60,7 +78,5 @@ namespace Zahibinden.Services.Storage.Azure
             _blobContainerClient = _blobServiceClient.GetBlobContainerClient(path);
             return _blobContainerClient.GetBlobs().Any(b => b.Name == fileName);
         }
-
-      
     }
 }

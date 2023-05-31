@@ -8,6 +8,6 @@ namespace Zahibinden.Services.StorageAbs.LocalStorageAbs
 {
     public interface ILocalStorage : IStorage
     {
-        Task<bool> CopyFileAsync(string path, IFormFile file);
+        Task<bool> CopyFileAsync(string path, IFormFileCollection file);
     }
 }

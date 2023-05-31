@@ -16,6 +16,8 @@ namespace Zahibinden.Controllers
             _storage = storage;
         }
 
+
+
         public IActionResult Index()
         {
             return View();
@@ -25,7 +27,12 @@ namespace Zahibinden.Controllers
         {
             return View();
         }
-   
+        public async Task<IActionResult> Image(IFormFileCollection files )
+        {
+            await _storage.UploadAsync("deneme", files);
+            return View("Index");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

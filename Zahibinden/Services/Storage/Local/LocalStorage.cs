@@ -1,4 +1,6 @@
-﻿using Zahibinden.Services.StorageAbs.LocalStorageAbs;
+﻿using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs;
+using Zahibinden.Services.StorageAbs.LocalStorageAbs;
 
 namespace WebSite.Infrastructure.Services.Storage.Local
 {
@@ -11,13 +13,28 @@ namespace WebSite.Infrastructure.Services.Storage.Local
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<bool> CopyFileAsync(string path, IFormFile file)
+        public async Task<bool> CopyFileAsync(string path, IFormFileCollection files)
         {
             try
             {
-                using FileStream fileStream = new(path, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 1024, useAsync: false);
-                await file.CopyToAsync(fileStream);
-                await fileStream.FlushAsync();
+                foreach (var file in files)
+                {
+                    string NewItemName = file.FileName;
+                    var ImageType = NewItemName.Split('.').Reverse().ToArray()[0];
+                    
+                    int a = 1;
+
+                    while (HasFile(path, NewItemName))
+                    {
+                        NewItemName = file.FileName.Replace($".{ImageType}", $"{a}.{ImageType}");
+                        a++;
+                    }
+
+                    using FileStream fileStream = new($"{path}\\{NewItemName}", FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 1024, useAsync: false);
+                    await file.CopyToAsync(fileStream);
+                    await fileStream.FlushAsync();
+                }
+
                 return true;
             }
             catch
@@ -27,7 +44,7 @@ namespace WebSite.Infrastructure.Services.Storage.Local
             }
         }
 
-        public async Task<bool> UploadAsync(string path, IFormFile file)
+        public async Task<bool> UploadAsync(string path, IFormFileCollection files)
         {
             try
             {
@@ -38,22 +55,33 @@ namespace WebSite.Infrastructure.Services.Storage.Local
                 if (!Directory.Exists(upPath))
                     Directory.CreateDirectory(upPath);
 
-                if(!await CopyFileAsync($"{upPath}\\{file.FileName}", file))
+                if (!await CopyFileAsync(upPath, files))
                     return false;
 
                 return true;
             }
-            catch 
+            catch
             {
                 return false;
             }
         }
 
-        public string GetSRC(string path, string fileName)
+        public List<string> GetSRC(string path)
         {
-            string pathv2 = $"UserUploads/{path}";
-            return $"/{pathv2}/{fileName}";
+            List<string> srcs = new List<string>();
+            string pathv2 = $"wwwroot/UserUploads/{path}";
+
+            string[] files = Directory.GetFiles(pathv2);
+            foreach (string file in files)
+            {
+                string src = $"/{file.Replace("wwwroot/", "").Replace("\\", "/")}";
+
+                srcs.Add(src);
+            }
+
+            return srcs;
         }
+
 
         public bool HasFile(string path, string fileName)
         => File.Exists($"{path}\\{fileName}");
@@ -61,6 +89,6 @@ namespace WebSite.Infrastructure.Services.Storage.Local
         public void Delete(string path, string fileName)
         => File.Delete($"{path}\\{fileName}");
 
-      
+
     }
 }
