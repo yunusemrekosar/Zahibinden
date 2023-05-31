@@ -1,0 +1,10 @@
+﻿using Zahibinden.Data.Entities.Common;
+
+namespace Zahibinden.Data.Entities
+{
+    public class AdvertType : BaseClass
+    {
+        public string Title { get; set; }
+
+    }
+}
