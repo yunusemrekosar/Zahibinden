@@ -16,9 +16,10 @@ namespace Zahibinden.Controllers
             _storage = storage;
         }
 
+
+
         public IActionResult Index()
         {
-            _storage.GetSRC("deneme");
             return View();
         }
 
