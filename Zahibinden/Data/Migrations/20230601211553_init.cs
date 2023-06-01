@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Zahibinden.Migrations
 {
-    public partial class mig1 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -211,14 +211,10 @@ namespace Zahibinden.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId1 = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId1 = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CityId1 = table.Column<int>(type: "int", nullable: false),
-                    CityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TypeId1 = table.Column<int>(type: "int", nullable: false),
-                    TypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: false),
+                    TypeId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     NumberofRooms = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -232,26 +228,26 @@ namespace Zahibinden.Migrations
                 {
                     table.PrimaryKey("PK_Adverts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Adverts_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Adverts_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Adverts_Categories_CategoryId1",
-                        column: x => x.CategoryId1,
+                        name: "FK_Adverts_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Adverts_Cities_CityId1",
-                        column: x => x.CityId1,
+                        name: "FK_Adverts_Cities_CityId",
+                        column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Adverts_Types_TypeId1",
-                        column: x => x.TypeId1,
+                        name: "FK_Adverts_Types_TypeId",
+                        column: x => x.TypeId,
                         principalTable: "Types",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -263,8 +259,7 @@ namespace Zahibinden.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AdvertId1 = table.Column<int>(type: "int", nullable: false),
-                    AdvertId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AdvertId = table.Column<int>(type: "int", nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -274,32 +269,32 @@ namespace Zahibinden.Migrations
                 {
                     table.PrimaryKey("PK_Images", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Images_Adverts_AdvertId1",
-                        column: x => x.AdvertId1,
+                        name: "FK_Images_Adverts_AdvertId",
+                        column: x => x.AdvertId,
                         principalTable: "Adverts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Adverts_CategoryId1",
+                name: "IX_Adverts_CategoryId",
                 table: "Adverts",
-                column: "CategoryId1");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Adverts_CityId1",
+                name: "IX_Adverts_CityId",
                 table: "Adverts",
-                column: "CityId1");
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Adverts_TypeId1",
+                name: "IX_Adverts_TypeId",
                 table: "Adverts",
-                column: "TypeId1");
+                column: "TypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Adverts_UserId1",
+                name: "IX_Adverts_UserId",
                 table: "Adverts",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -341,9 +336,9 @@ namespace Zahibinden.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Images_AdvertId1",
+                name: "IX_Images_AdvertId",
                 table: "Images",
-                column: "AdvertId1");
+                column: "AdvertId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

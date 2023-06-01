@@ -13,7 +13,7 @@ namespace Zahibinden.DataAccess.Concrete
             _context = context;
         }
 
-        public List<Advert> GetAdvertsByUserId(string userId)
+        public List<Advert> GetAdvertsByUserId(int userId)
         {
             return _context.Adverts.Where(x=>x.UserId == userId).ToList();
         }

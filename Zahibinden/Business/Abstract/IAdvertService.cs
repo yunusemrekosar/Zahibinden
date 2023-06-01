@@ -10,6 +10,6 @@ namespace Zahibinden.Business.Abstract
         bool DeleteAdvert(int advertId);
         Advert GetAdvertById(int advertId);
         List<Advert> GetAllAdverts();
-        List<Advert> GetAdvertsByUserId(string userId);
+        List<Advert> GetAdvertsByUserId(int userId);
     }
 }

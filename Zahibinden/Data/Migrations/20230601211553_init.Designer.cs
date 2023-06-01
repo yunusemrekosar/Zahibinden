@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Zahibinden.Data;
 
@@ -11,9 +12,10 @@ using Zahibinden.Data;
 namespace Zahibinden.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230601211553_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,16 +142,10 @@ namespace Zahibinden.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CategoryId1")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("CityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CityId1")
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -174,31 +170,24 @@ namespace Zahibinden.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TypeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("TypeId1")
+                    b.Property<int>("TypeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId1")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId1");
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("CityId1");
+                    b.HasIndex("CityId");
 
-                    b.HasIndex("TypeId1");
+                    b.HasIndex("TypeId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Adverts");
                 });
@@ -289,10 +278,7 @@ namespace Zahibinden.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid>("AdvertId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AdvertId1")
+                    b.Property<int>("AdvertId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -310,7 +296,7 @@ namespace Zahibinden.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdvertId1");
+                    b.HasIndex("AdvertId");
 
                     b.ToTable("Images");
                 });
@@ -468,25 +454,25 @@ namespace Zahibinden.Migrations
                 {
                     b.HasOne("Zahibinden.Data.Entities.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId1")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Zahibinden.Data.Entities.City", "City")
                         .WithMany()
-                        .HasForeignKey("CityId1")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Zahibinden.Data.Entities.AdvertType", "Type")
                         .WithMany()
-                        .HasForeignKey("TypeId1")
+                        .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Zahibinden.Data.Entities.User", "User")
                         .WithMany("Adverts")
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -503,7 +489,7 @@ namespace Zahibinden.Migrations
                 {
                     b.HasOne("Zahibinden.Data.Entities.Advert", "Advert")
                         .WithMany("Images")
-                        .HasForeignKey("AdvertId1")
+                        .HasForeignKey("AdvertId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

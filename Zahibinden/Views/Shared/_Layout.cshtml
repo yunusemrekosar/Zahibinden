@@ -200,11 +200,22 @@
                                 @if (!SignInManager.IsSignedIn(User))
                                 {
                                     <a class="login-info d-flex align-items-center" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><i class="far fa-user-circle fz16 me-2"></i> <span class="d-none d-xl-block">Login / Register</span></a>
+
+                                 @*   <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                    </li>*@
                                 }
+
                                 else
                                 {
-
-                                    <a class="login-info d-flex align-items-center" data-bs-toggle="modal" href="/Identity/Account/Logout" role="button"><i class="far fa-user-circle fz16 me-2"></i> <span class="d-none d-xl-block">Logout</span></a>
+                                    <div class="nav-item">
+                                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                            <a class="login-info d-flex align-items-center" data-bs-toggle="modal" href="/Identity/Account/Logout" role="button"><i class="far fa-user-circle fz16 me-2"></i> <span class="d-none d-xl-block">Logout</span></a>
+                                        </form>
+                                    </div>
 
                                 }
                                 <a class="ud-btn btn-dark mx-2 mx-xl-4" href="page-dashboard-add-property.html">Add Property<i class="fal fa-arrow-right-long"></i></a>

@@ -61,7 +61,7 @@ namespace Zahibinden.Business.Concrete
             return _advertDal.GetById(advertId);
         }
 
-        public List<Advert> GetAdvertsByUserId(string userId)
+        public List<Advert> GetAdvertsByUserId(int userId)
         {
             return _advertDal.GetAdvertsByUserId(userId);
         }

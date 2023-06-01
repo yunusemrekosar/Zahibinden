@@ -6,13 +6,13 @@ namespace Zahibinden.Data.Entities
     {
         public string Title { get; set; }
         public Category Category { get; set; }
-        public Guid CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public User User { get; set; }
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public City City { get; set; }
-        public Guid CityId { get; set; }
+        public int CityId { get; set; }
         public AdvertType Type { get; set; }
-        public Guid TypeId { get; set; }
+        public int TypeId { get; set; }
         public double Price { get; set; }
         public string? NumberofRooms { get; set; }
         public string? Description { get; set; }
