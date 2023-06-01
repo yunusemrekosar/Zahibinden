@@ -17,6 +17,9 @@ namespace Zahibinden.Services
 
             CreateMap<User, IdentityUser>();
             CreateMap<IdentityUser, User>();
+
+            CreateMap<Advert, VM_ShowAdvert>();
+            CreateMap<VM_ShowAdvert, Advert>();
         }
     }
 }

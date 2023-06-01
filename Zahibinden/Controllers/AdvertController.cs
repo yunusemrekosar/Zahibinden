@@ -23,10 +23,8 @@ namespace Zahibinden.Controllers
 
         public IActionResult Index()
         {
-            VM_CreateAdvert advert = new VM_CreateAdvert();
-            advert.Title = "ssadasfa";
-            _advertService.AddAdvert(advert);
-            return View();
+            List<VM_ShowAdvert> list = _advertService.GetAllAdvertsShow();
+            return View(list);
         }
 
         public IActionResult Create()
@@ -41,10 +39,12 @@ namespace Zahibinden.Controllers
             return View();
         }
 
+        [HttpGet("/Advert/Update/{advertId}")]
         public IActionResult Update(int advertId)
         {
-            Advert advert = _advertService.GetAdvertById(advertId);
-            return View(advert);
+            //Advert advert = _advertService.GetAdvertById(advertId);
+            VM_UpdateAdvert advertView = _advertService.GetAdvertByIdUpdate(advertId);
+            return View(advertView);
         }
 
         [HttpPost]
