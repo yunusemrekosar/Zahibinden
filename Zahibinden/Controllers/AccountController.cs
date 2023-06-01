@@ -16,12 +16,6 @@ namespace Zahibinden.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
-        public IActionResult Login()
-        {
-            // Login sayfasını görüntüleyen Action metodu
-            return View();
-        }
 
         [HttpPost]
         public async Task<IActionResult> Login(InputModel model)
@@ -38,8 +32,10 @@ namespace Zahibinden.Controllers
                 }
                 else
                 {
-                    // Hatalı giriş, hata mesajı gösterin
-                    ModelState.AddModelError("", "Geçersiz kullanıcı adı veya parola");
+
+                    ViewBag.Login = "Geçersiz kullanıcı adı veya parola";
+
+                    return NoContent();
                 }
             }
 
@@ -77,15 +73,18 @@ namespace Zahibinden.Controllers
                 }
                 else
                 {
-                    // Kayıt başarısız, hata mesajlarını gösterin
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
+                    //// Kayıt başarısız, hata mesajlarını gösterin
+                    //foreach (var error in result.Errors)
+                    //{
+                    //    ModelState.AddModelError("", error.Description);
+                    //}
+                    return NoContent();
+
                 }
             }
 
-            return View(model);
+            return NoContent();
+
         }
     }
 }
