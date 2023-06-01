@@ -1,5 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Zahibinden.Models.ViewModels;
+@model List<VM_ShowAdvert>
 @{
+}
+
+@for (int i = 0; i < Model.Count; i++)
+{
+    <ul>
+        <li>@Model[i].Title</li>
+        <li>@Model[i].TypeName</li>
+        <li>@Model[i].CategoryName</li>
+        <li>@Model[i].CategoryId</li>
+    </ul>
 }
