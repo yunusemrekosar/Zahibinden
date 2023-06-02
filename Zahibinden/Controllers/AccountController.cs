@@ -20,7 +20,7 @@ namespace Zahibinden.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(InputModel model)
         {
-            // Giriş işlemini gerçekleştiren Action metodu
+
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(model.Email);
@@ -38,8 +38,7 @@ namespace Zahibinden.Controllers
                     return NoContent();
                 }
             }
-
-            return View(model);
+            return NoContent();
         }
 
         [HttpGet]

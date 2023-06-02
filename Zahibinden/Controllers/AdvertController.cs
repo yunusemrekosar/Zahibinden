@@ -9,7 +9,6 @@ using Zahibinden.Models.ViewModels;
 
 namespace Zahibinden.Controllers
 {
-    [Authorize]
     public class AdvertController : Controller
     {
         private readonly IAdvertService _advertService;

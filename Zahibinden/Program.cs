@@ -1,13 +1,8 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WebSite.Infrastructure.Services.Storage.Local;
 using Zahibinden.Data;
 using Zahibinden.Services;
-using Zahibinden.Services.Storage;
 using Zahibinden.Services.Storage.Azure;
 using AutoMapper;
-using Zahibinden.DataAccess.Abstract;
-using Zahibinden.DataAccess.Concrete;
 using Zahibinden.Data.Entities;
 
 namespace Zahibinden

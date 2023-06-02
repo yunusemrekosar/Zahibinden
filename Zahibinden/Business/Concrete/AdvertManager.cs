@@ -78,7 +78,8 @@ namespace Zahibinden.Business.Concrete
 
         public List<Advert> GetAllAdverts()
         {
-            return _advertDal.GetAll();
+            return _context.Adverts.Include(i=>i.Images).ToList(); //todo: burayı düzelt
+            //return _advertDal.GetAll();
         }
 
         public List<VM_ShowAdvert> GetAllAdvertsShow()

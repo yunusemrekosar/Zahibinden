@@ -7676,28 +7676,6 @@ li.mm-listitem:focus {
   -o-transform: rotate(0deg);
 }
 
-.body_content_wrapper:before {
-  background: rgba(24, 26, 32, 0.5);
-  bottom: 0;
-  content: "";
-  height: 100%;
-  left: 0;
-  opacity: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 100%;
-  z-index: 0;
-  -webkit-transition: all 0.4s ease;
-  -moz-transition: all 0.4s ease;
-  -ms-transition: all 0.4s ease;
-  -o-transition: all 0.4s ease;
-  transition: all 0.4s ease;
-}
-.body_content_wrapper.before_active:before {
-  opacity: 1;
-  z-index: 9;
-}
 
 .hiddenbar_navbar_menu .navbar-nav .nav-item .nav-link:hover i,
 .hiddenbar_navbar_menu .navbar-nav .nav-item .nav-link:active i,
